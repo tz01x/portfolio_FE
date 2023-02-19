@@ -1,0 +1,109 @@
+.portfolioArticle {
+    width: 222px;
+    height: 163px;
+    border: 1px solid rgb(49, 49, 48);
+    border-radius: 25px;
+    overflow: hidden;
+    opacity: 0;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    background-image: none;
+    background-size: 399%;
+    background-repeat: no-repeat;
+    background-position: 100%;
+    transition: all 1s cubic-bezier(0.41, 0.55, 0.27, 1.24);
+} 
+
+.portfolioArticle:hover{
+    box-shadow: 2px 4px 7px 2px rgb(0 0 0);
+    background-image: linear-gradient(315deg, rgba( 0,0,0,0) 37% , rgba( 255,255,255,0.3) , rgba( 0,0,0,0) 61% );
+    background-position: 0;
+}
+
+.portfolioArticle img {
+    width: 299px;
+    height: 204px;
+    object-fit: cover;
+}
+
+.portfolioArticle footer {
+    font-size: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    margin-top: auto;
+    margin-bottom: 2px;
+    color: white;
+}
+
+.iconWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalInnerContent{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.modalInnerContent img{
+    max-width: 300px;
+    width: 100%;
+}
+
+.textContent{
+    display: flex;
+    flex-direction: column;
+}
+
+.textContent footer{
+    margin-top: auto;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.textContent a{
+    text-decoration: none;
+    color: var(--secondary-color);
+}
+
+@media only screen and (max-width: 768px) {
+
+    .portfolioArticle {
+        width: 200px;
+    }
+}
+
+@media only screen and (max-width: 645px) {
+
+    .portfolioArticle {
+        width: 189px;
+    }
+    .modalInnerContent{
+        grid-template-columns: 1fr;
+        place-items: center;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+
+    .portfolioArticle {
+        width: 275px;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .portfolioArticle h3{
+        padding: 0 10px;
+        flex-grow: 1;
+    }
+    .portfolioArticle footer {
+        flex-direction: column;
+        margin: auto;
+        padding: 10px;
+    }
+}
+

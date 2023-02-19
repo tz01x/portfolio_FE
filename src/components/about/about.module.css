@@ -1,0 +1,39 @@
+.root {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  background-color: transparent !important;
+  color: var(--secondary-color);
+  gap: 20px;
+  height: 90vh;
+  max-height: 1024px;
+}
+.container-default {
+  width: 70%;
+  margin: auto;
+}
+.author-info {
+  text-align: left;
+  font-size: small;
+  max-width: 300px;
+}
+.author-info p:nth-child(2) {
+  font-size: medium;
+}
+.author-name {
+  font-weight: 600;
+  font-size: x-large;
+}
+.author-name span:nth-child(1) {
+  font-size: medium;
+}
+@media only screen and (max-width: 645px) {
+  /*Big smartphones [426px -> 600px]*/
+  .root {
+    flex-direction: column;
+    gap: 0px;
+    height: 100%;
+  }
+}

@@ -1,0 +1,24 @@
+---
+import "./blogs_slider.scss";
+import { BlogsList } from "../../interfaces";
+
+export interface Props {
+    data: BlogsList;
+}
+
+const { data } = Astro.props;
+---
+
+<article class="blogArticle">
+    <div>
+        <header>
+            <h3>{data.title}</h3>
+        </header>
+        <main class="blogsMain">
+            <p>{data.shortDescription}</p>
+        </main>
+        <footer>
+            <a href="#">View more</a>
+        </footer>
+    </div>
+</article>

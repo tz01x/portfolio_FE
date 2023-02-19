@@ -1,0 +1,73 @@
+.author-image {
+    width: 300px;
+    position: relative;
+    filter:  drop-shadow(2px 4px 6px black);
+}
+
+.imageBackgroundSvg {
+    z-index: 1;
+    stroke-width: 2;
+}
+
+.imageForegroundSvg {
+    pointer-events: none;
+    position: absolute;
+    top: -1px;
+}
+
+.imageSvgUp {
+    z-index: 2;
+}
+
+.imageSvgUp .main_img {
+    filter: drop-shadow(2px 4px 6px black);
+}
+
+.imageSvgDown {
+    z-index: 0;
+    filter: drop-shadow(2px 4px 6px black);
+}
+
+
+.imageSvgZIndexOff {
+    z-index: 0;
+}
+
+.main_img {
+    width: 300px;
+    height: 250px;
+}
+
+.ic-animation-wrapper{
+    position: absolute;
+    top: -1000px;
+    right: -1000px;
+}
+
+.ic-wrapper {
+    width: 30px;
+    height: 30px;
+    color: rgb(0, 0, 0);
+    background: rgb(255, 255, 255);
+    border: 2px solid rgb(126, 126, 126);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.5s;
+}
+
+.ic-wrapper:hover {
+    color: white;
+    background: rgb(21, 101, 192);
+    transform: scale(1.1);
+    box-shadow: rgb(0 0 0 / 20%) 0px 2px 4px -1px, rgb(0 0 0 / 14%) 0px 4px 5px 0px, rgb(0 0 0 / 12%) 0px 1px 10px 0px;
+}
+
+.ic-wrapper i {
+
+    font-size: 20px;
+    cursor: pointer;
+}

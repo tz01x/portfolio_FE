@@ -1,0 +1,19 @@
+---
+import About from '../components/about/about.astro';
+import BlogsSliders from '../components/blogs_slider/blogs_slider.astro';
+import { Portfolio } from '../components/portfolio/portfolio';
+import Layout from '../layouts/Layout.astro';
+
+---
+
+<Layout title="Tumzied - Portfolio">
+	<main>
+		<About />
+		<Portfolio client:only="react" className=""/>
+		<BlogsSliders />
+	</main>
+</Layout>
+
+<style>
+	
+</style>

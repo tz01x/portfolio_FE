@@ -1,0 +1,22 @@
+.portfolioSection {
+    height: 100%;
+    color: var(--secondary-color);
+    width: 70%;
+    margin: 1em auto 8em auto;
+}
+
+
+.articles {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 768px) {
+
+    .portfolioSection {
+        width: 95%;
+    }
+}
