@@ -34,7 +34,7 @@ export const Portfolio = ({ className = "" }: PortfolioProps) => {
 
     return <section className={classNames(styles.portfolioSection, className)}>
         <header>
-            <h2>My Works </h2>
+            <h2 className='text-center'>My Works </h2>
         </header>
         <main className={styles.articles} data-item={loading}>
             {!loading ?
