@@ -1,0 +1,58 @@
+---
+import configs from "../configs.json";
+
+export interface Skills {
+    id: number;
+    name: string;
+    svg: string;
+    img_src: string;
+}
+
+let skills: Skills[] = [];
+try {
+    const response = await fetch(configs["BASE_API"] + "/api/get-skills/");
+    skills = await response.json();
+} catch (error) {
+    console.log(error);
+    skills = [];
+}
+---
+
+<section class="my-10">
+    <header>
+        <h2>Skills</h2>
+    </header>
+    <main class="mt-5">
+        <ul class="flex flex-wrap gap-8 justify-center max-w-lg m-auto">
+            {
+                skills.map((skill) => {
+                    return (
+                        <li class="flex content-center justify-center flex-col">
+                            <div class="rounded-full bg-gray-900 p-2 w-12 h-12 m-auto">
+                                {skill.svg ? (
+                                    <span set:html={skill.svg} />
+                                ) : (
+                                    <img src={skill.img_src} alt="" srcset="" />
+                                )}
+                            </div>
+                            <p class="text-sm text-center capitalize">
+                                {skill.name}
+                            </p>
+                        </li>
+                    );
+                })
+            }
+        </ul>
+    </main>
+</section>
+
+<style>
+    section {
+        width: 70%;
+        margin: auto;
+        color: var(--secondary-color);
+    }
+    header h2 {
+        text-align: center;
+    }
+</style>
