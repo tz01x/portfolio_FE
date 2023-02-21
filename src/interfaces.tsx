@@ -12,7 +12,7 @@ export interface PaginationResponse<T>{
     count: number
     next: string
     prev: string
-    data: T[]
+    results: T[]
 }
 
 export interface BlogsList {
