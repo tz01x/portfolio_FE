@@ -2,10 +2,14 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 
-export default function () {
+export interface AboutInteractiveProps{
+    className?:string
+}
+
+export default function ({className}:AboutInteractiveProps) {
 
     return <Box
-
+        className={className}
         sx={{
             display: "flex",
             gap: "5px",
