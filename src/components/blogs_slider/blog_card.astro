@@ -1,6 +1,7 @@
 ---
 import "./blogs_slider.scss";
 import { BlogsList } from "../../interfaces";
+import configs from "../../configs.json"
 
 export interface Props {
     data: BlogsList;
@@ -10,7 +11,7 @@ const { data } = Astro.props;
 ---
 
 <article class="blogArticle">
-    <div>
+    <div class="wrapper-blogArticle">
         <header>
             <h3>{data.title}</h3>
         </header>
@@ -18,7 +19,7 @@ const { data } = Astro.props;
             <p>{data.shortDescription}</p>
         </main>
         <footer>
-            <a href="#">View more</a>
+            <a href={configs.BASE_API+data.url}>View more</a>
         </footer>
     </div>
 </article>
