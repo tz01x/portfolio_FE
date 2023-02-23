@@ -1,26 +1,23 @@
 ---
 import BlogCard from "./blog_card.astro";
 import Configs from "../../configs.json";
-import { PaginationResponse,BlogsList } from "../../interfaces";
-// Import Swiper styles
+import { PaginationResponse, BlogsList } from "../../interfaces";
+
 import "./blogs_slider.scss";
 import "swiper/css";
 import "swiper/css/navigation";
 
-
- 
-let data = null;
-
-const response = await fetch(Configs['BASE_API'] + "/api/get-blogs?limit=5");
-if(response.ok){
-    data = await response.json() as PaginationResponse<BlogsList>;
-    data = data.results;
+let data : BlogsList[] = [];
+try {
+    const response = await fetch(Configs["BASE_API"] + "/api/get-blogs?limit=5");
+    const temp_data = (await response.json()) as PaginationResponse<BlogsList>;
+    data = temp_data.results;
+    
+} catch (error) {
+    console.log(error);
 }
 
-
 ---
-
-
 
 <section class="blogSection">
     <main>
@@ -49,32 +46,31 @@ if(response.ok){
     import Swiper, { Autoplay, Navigation } from "swiper";
 
     const swiper = new Swiper(".mySwiper", {
-    spaceBetween: 30,
-    slidesPerView:3,
-    autoplay: {
-        delay: 2000,
-        disableOnInteraction: false,
-        
-    },
-    navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-    },
-    breakpoints: {
-        300: {
-          slidesPerView: 1,
-          spaceBetween: 0,
+        spaceBetween: 30,
+        slidesPerView: 3,
+        centeredSlides: true,
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
         },
-        768:{
-            slidesPerView: 2,
-            spaceBetween: 50,
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
         },
-        1024:{
-            slidesPerView: 3,
-            spaceBetween: 50,
-        }
-      },
-    modules:[Autoplay, Navigation],
-});
-    
+        breakpoints: {
+            300: {
+                slidesPerView: 1,
+                spaceBetween: 0,
+            },
+            768: {
+                slidesPerView: 2,
+                spaceBetween: 50,
+            },
+            1024: {
+                slidesPerView: 3,
+                spaceBetween: 50,
+            },
+        },
+        modules: [Autoplay, Navigation],
+    });
 </script>
