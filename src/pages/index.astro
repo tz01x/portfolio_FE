@@ -1,7 +1,9 @@
 ---
 import About from '../components/about/about.astro';
 import BlogsSliders from '../components/blogs_slider/blogs_slider.astro';
+import Contract from '../components/contract/contract.astro';
 import { Portfolio } from '../components/portfolio/portfolio';
+import Skills from '../components/skills.astro';
 import Layout from '../layouts/Layout.astro';
 
 ---
@@ -12,7 +14,13 @@ import Layout from '../layouts/Layout.astro';
 		<Skills/>
 		<Portfolio client:only="react" className=""/>
 		<BlogsSliders />
+		<Contract/>
 	</main>
+	<footer class="mt-5 ">
+		<p class="text-xs text-center text-white">
+			tz @ 2023
+		</p>
+	</footer>
 </Layout>
 
 <style>
