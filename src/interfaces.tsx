@@ -21,4 +21,7 @@ export interface BlogsList {
     shortDescription: string
     url: string
     hits: number
+    author: string
+    created: string
+    slug: string
 }
