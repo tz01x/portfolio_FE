@@ -1,0 +1,90 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import conifgs from "../../configs.json";
+import { PaginationResponse, BlogsList } from "../../interfaces";
+
+let blogs: PaginationResponse<BlogsList> | undefined;
+
+try {
+    const response = await fetch(
+        conifgs.BASE_API + "/api/get-blogs?limit=50&offest=0"
+    );
+    blogs = (await response.json()) as PaginationResponse<BlogsList>;
+} catch (error) {}
+---
+
+<Layout title="blogs-tumzied">
+    <section class="grid grid-cols-1 md:grid-cols-3">
+        <main class="md:col-span-2 border border-b-0 border-l-0 min-h-screen">
+            <div class="w-4/5 mx-auto">
+                <ul>
+                    {
+                        blogs?.results?.map((data, index) => {
+                            return (
+                                <li>
+                                    <article class="p-5">
+                                        <header class="my-2">
+                                            <h2 class="text-lg">
+                                                <a href={`/blogs/${data.slug}`}>
+                                                    {data.title}
+                                                </a>
+                                            </h2>
+                                            <div class="text-xs">
+                                                <address class="my-2">
+                                                    <span tabindex="0" aria-label="author name">
+                                                        <strong>
+                                                            {data.author}
+                                                        </strong>
+                                                    </span>
+                                                    <span
+                                                        tabindex="0"
+                                                        class="ml-2"
+                                                        aria-label={`published at ${data.created}`}
+                                                    >
+                                                        <em>{data.created}</em>
+                                                    </span>
+                                                    <span
+                                                        class="cursor-pointer ml-2"
+                                                        title={`views ${data.hits}`}
+                                                    >
+                                                        <i class="fa-solid fa-eye" />{" "}
+                                                        {data.hits}
+                                                    </span>
+                                                </address>
+                                            </div>
+                                        </header>
+
+                                        <main class="text-sm">
+                                            <p class="w-3/4" tabindex="0">
+                                                {data.shortDescription}
+                                            </p>
+                                        </main>
+                                        <footer class="mt-2">
+                                            <ul tabindex="0" class="flex gap-2" aria-label="categories">
+                                                {data.category.map((c) => {
+                                                    return (
+                                                        <li tabindex="0" class="px-2  py-1 border border-white  transition-all rounded-lg hover:rounded-sm hover:scale-110 focus-visible:scale-110">
+                                                            {c}
+                                                        </li>
+                                                    );
+                                                })}
+                                            </ul>
+                                        </footer>
+                                        <hr class="mt-5" />
+                                    </article>
+                                </li>
+                            );
+                        })
+                    }
+                </ul>
+            </div>
+        </main>
+        <aside class="border border-b-0 border-x-0">aside</aside>
+    </section>
+</Layout>
+
+<style>
+    section {
+        color: var(--secondary-color);
+    }
+</style>

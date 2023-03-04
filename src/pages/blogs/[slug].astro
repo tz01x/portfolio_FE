@@ -1,0 +1,32 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import confgis from "../../configs.json";
+import { BlogDetail } from "../../interfaces";
+
+const { slug } = Astro.params;
+let data: BlogDetail | undefined = undefined;
+try {
+    const respone = await fetch(confgis.BASE_API + "/api/blog/" + slug);
+    if (!respone.ok) {
+        return Astro.redirect("/404");
+    }
+    data = await respone.json();
+} catch (error) {}
+---
+
+<Layout title={`${data.title} - ${data.author}`}>
+    <section class="w-3/4 mx-auto mt-5">
+        <header class="mb-6 text-center capitalize">
+            <h1 class="text-2xl font-sans">{data.title}</h1>
+        </header>
+        <main>
+            <p set:html={data.content}></p>
+
+        </main>
+    </section>
+</Layout>
+<style>
+    section {
+        color: var(--secondary-color);
+    }
+</style>
