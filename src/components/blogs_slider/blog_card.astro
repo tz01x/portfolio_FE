@@ -19,7 +19,7 @@ const { data } = Astro.props;
             <p>{data.shortDescription}</p>
         </main>
         <footer>
-            <a href={configs.BASE_API+data.url}>View more</a>
+            <a href={'/blogs/'+data.slug}>View more</a>
         </footer>
     </div>
 </article>
