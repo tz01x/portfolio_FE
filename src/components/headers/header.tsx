@@ -13,11 +13,11 @@ export const Header = ({ className, children = 'Header' }: HeaderProps) => {
   return (
     <div className={styles.header_root + ' ' + className}>
       <nav className={'container-default ' + styles['navbar']}>
-        <div className={styles['brand-name']}>
+        <a href='/' className={styles['brand-name']}>
           <div className={styles['glitch-wrapper']}>
             <div className={styles['glitch']}>Tz</div>
           </div>
-        </div>
+        </a>
         <div className={styles['navbar-btn']}>
           <svg
             xmlns="http://www.w3.org/2000/svg"

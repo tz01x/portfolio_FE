@@ -1,5 +1,5 @@
 ---
-import Layout from "../../layouts/Layout.astro";
+import BlogLayout from "../../layouts/BlogLayout.astro";
 import confgis from "../../configs.json";
 import { BlogDetail } from "../../interfaces";
 
@@ -8,25 +8,82 @@ let data: BlogDetail | undefined = undefined;
 try {
     const respone = await fetch(confgis.BASE_API + "/api/blog/" + slug);
     if (!respone.ok) {
+        console.log(respone);
         return Astro.redirect("/404");
     }
     data = await respone.json();
 } catch (error) {}
 ---
 
-<Layout title={`${data.title} - ${data.author}`}>
-    <section class="w-3/4 mx-auto mt-5">
-        <header class="mb-6 text-center capitalize">
-            <h1 class="text-2xl font-sans">{data.title}</h1>
-        </header>
-        <main>
-            <p set:html={data.content}></p>
+<BlogLayout title={`${data.title} - ${data.author}`}>
+    <div class="w-3/4 mx-auto mt-5">
+        <header class="mb-6">
+            
 
-        </main>
-    </section>
-</Layout>
-<style>
-    section {
-        color: var(--secondary-color);
+            <h1 class="text-3xl font-sans capitalize">{data.title}</h1>
+
+            <div class="flex gap-2 mt-2 text-sm items-end">
+                <address class="flex flex-row gap-1">
+                    <img
+                        class="rounded-full w-8 h-8 my-auto"
+                        src="/defaultpic.png"
+                        alt="author-image"
+                        aria-label="author-image"
+                    />
+    
+                    <div class="flex flex-col text-sm">
+                        <span class="capitalize font-bold">
+                            {data.author}
+                        </span>
+                        <span>
+                            <i class="fa-regular fa-calendar-days"></i>{" "}
+                            {data.created}
+                        </span>
+                        
+                    </div>
+                </address>
+                
+                <span
+                    class="cursor-pointer "
+                    title={`views ${data.hits}`}
+                >
+                    <i class="fa-solid fa-eye"></i>{" "}
+                    {data.hits}
+                </span>
+                <span class="cursor-pointer" title={`comment 0`}>
+                    <i class="fa-solid fa-comment"></i>{" "}
+                    {0}
+                </span>
+            </div>
+        </header>
+        {
+            data.picture ? (
+                <div class="my-2 ">
+                    <img src={data.picture} alt="" srcset="" />
+                </div>
+            ) : null
+        }
+
+        <div id="content" class="overflow-x-scroll desiable-scrollbar">
+            <p set:html={data.content} />
+        </div>
+    </div>
+    <div slot="aside">
+        <div class="mt-3">
+            
+        </div>
+    </div>
+</BlogLayout>
+<script>
+    import confgis from "../../configs.json";
+
+    const content = document.getElementById("content");
+    const images = content.getElementsByTagName("img");
+
+    for (let index = 0; index < images.length; index++) {
+        const element = images[index];
+
+        const relative_src = element.getAttribute("src");
+        element.src = confgis.BASE_API + relative_src;
     }
-</style>
+</script>

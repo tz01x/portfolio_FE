@@ -24,4 +24,11 @@ export interface BlogsList {
     author: string
     created: string
     slug: string
+    category: Array<string>
+}
+
+export interface BlogDetail extends BlogsList {
+    content: string
+    picture: string | null
+    picture_ref: string | null
 }
