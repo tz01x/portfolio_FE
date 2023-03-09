@@ -3,6 +3,10 @@ import { useState } from "react";
 import { load } from 'recaptcha-v3'
 import configs from "../../configs.json";
 
+export interface ContractFormInterface{
+    urlEndpoint: string
+}
+
 const formValueInit = {
     name: '',
     email: '',
@@ -29,7 +33,7 @@ const formValidator = {
     messages: (v) => stringLengthValidation(v, 10, 100),
 }
 
-export default function () {
+export default function ContractForm (props: ContractFormInterface) {
     const [hasError, setHasError] = useState(false);
     const [formValue, setFormValue] = useState({ ...formValueInit });
 
@@ -49,7 +53,7 @@ export default function () {
             const recaptcha = await load(configs.Data_Site_Key);
             const token = await recaptcha.execute('submit');
             const payload = { ...formValue, "token": token };
-            const response = await fetch(configs.BASE_API + '/get-in-touch/', {
+            const response = await fetch(configs.BASE_API + props.urlEndpoint, {
                 method: "POST",
                 body: JSON.stringify(payload),
             });

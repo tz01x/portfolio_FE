@@ -1,0 +1,42 @@
+---
+import "./comments_section.css";
+import ContractForm from "../contract/contract_form";
+
+interface Props{
+    blog_slug: string
+};
+
+const {blog_slug} = Astro.props;
+---
+
+<div class="aside_component_comment" id="comment_section">
+    <div class="aside_component_comment-header">
+        <h3>Comment Section</h3>
+    </div>
+    <!-- Todo: need to modify  ContractForm component to support extranal css -->
+    <ContractForm client:idle urlEndpoint={`/api/comments/${blog_slug}`}/>
+    
+    <br />
+    <hr />
+    <br />
+    <div class="aside_component_comment-comments">
+        <div class="aside_component_comment-comment" id="{i}">
+            <div>
+                <div class="comment-header">
+                    <img src="https://picsum.photos/seed/585/35/35" alt="" />
+                    <div>
+                        <strong>alex</strong>
+
+                        <br />
+                        1 day ago
+                    </div>
+                </div>
+                <p class="comment-body">this is cool artical</p>
+            </div>
+        </div>
+        <hr />
+    </div>
+</div>
+<br />
+
+

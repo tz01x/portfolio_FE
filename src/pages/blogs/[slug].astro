@@ -2,6 +2,7 @@
 import BlogLayout from "../../layouts/BlogLayout.astro";
 import confgis from "../../configs.json";
 import { BlogDetail } from "../../interfaces";
+import CommentsSection from "../../components/comments_section/comments_section.astro";
 
 const { slug } = Astro.params;
 let data: BlogDetail | undefined = undefined;
@@ -18,8 +19,6 @@ try {
 <BlogLayout title={`${data.title} - ${data.author}`}>
     <div class="w-3/4 mx-auto mt-5 relative">
         <header class="mb-6">
-            
-
             <h1 class="text-3xl font-sans capitalize">{data.title}</h1>
 
             <div class="flex gap-2 mt-2 text-sm items-end">
@@ -30,7 +29,7 @@ try {
                         alt="author-image"
                         aria-label="author-image"
                     />
-    
+
                     <div class="flex flex-col text-sm">
                         <span class="capitalize font-bold">
                             {data.author}
@@ -39,14 +38,10 @@ try {
                             <i class="fa-regular fa-calendar-days"></i>{" "}
                             {data.created}
                         </span>
-                        
                     </div>
                 </address>
-                
-                <span
-                    class="cursor-pointer "
-                    title={`views ${data.hits}`}
-                >
+
+                <span class="cursor-pointer" title={`views ${data.hits}`}>
                     <i class="fa-solid fa-eye"></i>{" "}
                     {data.hits}
                 </span>
@@ -67,16 +62,25 @@ try {
         <div id="content" class="overflow-x-scroll desiable-scrollbar">
             <p set:html={data.content} />
         </div>
-       
     </div>
     <div slot="aside" class="p-6">
-        <h3 class="text-center">Categories</h3>
-        <div class="flex gap-3">
-    
-            {data.category.map(name=>{
-                return <a class="inputs rounded-full transition-colors cursor-pointer hover:bg-gray-400 hover:text-black">{name}</a>
-            })}
-        </div>
+        <section>
+            <h3 class="text-center">Categories</h3>
+            <div class="flex gap-3">
+                {
+                    data.category.map((name) => {
+                        return (
+                            <a class="inputs rounded-full transition-colors cursor-pointer hover:bg-gray-200  hover:text-black">
+                                {name}
+                            </a>
+                        );
+                    })
+                }
+            </div>
+        </section>
+        <section class="mt-5">
+            <CommentsSection blog_slug={slug} />
+        </section>
     </div>
 </BlogLayout>
 <script>
