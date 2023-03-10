@@ -10,31 +10,31 @@ const {blog_slug} = Astro.props;
 ---
 
 <div class="aside_component_comment" id="comment_section">
-    <div class="aside_component_comment-header">
-        <h3>Comment Section</h3>
+    <div class="text-center">
+        <h3>Comments</h3>
     </div>
-    <!-- Todo: need to modify  ContractForm component to support extranal css -->
-    <ContractForm client:idle urlEndpoint={`/api/comments/${blog_slug}`}/>
-    
-    <br />
-    <hr />
-    <br />
-    <div class="aside_component_comment-comments">
-        <div class="aside_component_comment-comment" id="{i}">
-            <div>
-                <div class="comment-header">
-                    <img src="https://picsum.photos/seed/585/35/35" alt="" />
-                    <div>
-                        <strong>alex</strong>
+    <div class="mb-12">    
+        <!-- Todo: need to modify  ContractForm component to support extranal css -->
+        <ContractForm client:idle urlEndpoint={`/api/comments/${blog_slug}`}/>
+    </div>
 
-                        <br />
-                        1 day ago
+    <div class="comments">
+        <div class="comment" id="{i}">
+            <div class="flex gap-1">
+                
+                <img class="rounded-full w-9 h-9" src="https://picsum.photos/seed/22/35/35" alt="" />
+                <div>
+
+                    <div class="bg-[var(--primary-color)] rounded-md pr-10 p-2">
+                        <strong>alex</strong>
+                        <p>this is cool artical</p>
                     </div>
+                    <div class="text-sm">4h ago</div>
                 </div>
-                <p class="comment-body">this is cool artical</p>
+                
             </div>
         </div>
-        <hr />
+
     </div>
 </div>
 <br />
