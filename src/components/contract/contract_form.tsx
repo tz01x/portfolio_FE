@@ -3,8 +3,16 @@ import { useState } from "react";
 import { load } from 'recaptcha-v3'
 import configs from "../../configs.json";
 
-export interface ContractFormInterface{
+export enum ContractFormConfig{
+    ConfigOne = "flex-row",
+    ConfigTwo = "flex-col"
+} 
+
+export interface IContractFormInterface {
     urlEndpoint: string
+    submitBtnText?: string
+    className?: string
+    configuration: ContractFormConfig
 }
 
 const formValueInit = {
@@ -33,7 +41,7 @@ const formValidator = {
     messages: (v) => stringLengthValidation(v, 10, 100),
 }
 
-export default function ContractForm (props: ContractFormInterface) {
+export default function ContractForm(props: IContractFormInterface) {
     const [hasError, setHasError] = useState(false);
     const [formValue, setFormValue] = useState({ ...formValueInit });
 
@@ -58,7 +66,7 @@ export default function ContractForm (props: ContractFormInterface) {
                 body: JSON.stringify(payload),
             });
             if (response.ok) {
-                setFormValue({...formValueInit});
+                setFormValue({ ...formValueInit });
 
             } else {
                 console.log(await response.text());
@@ -74,59 +82,65 @@ export default function ContractForm (props: ContractFormInterface) {
         const { name, value } = e.target;
         setFormValue({ ...formValue, [name]: value });
     }
-    return <form style={{
-        display: "flex",
-        flexDirection: "column"
-    }} className="form mt-4" id="form" onSubmit={_ => false}>
+    return (
+        <form className={"form mt-4 flex flex-col gap-3 " + (!props.className ? '' : props.className)} id="form" onSubmit={_ => false}>
+            <div className={"flex gap-3 "+props.configuration}>
+                <div className="">
 
-        <input
-            className="inputs"
-            type="text"
-            name="name"
-            required
-            placeholder="Your Name"
-            value={formValue.name}
-            onChange={handelChange}
-        />
-        {hasError ? <div className="invalid-form" id="invalid-form-name">
-            name must be more then 4 character
-        </div> : null}
-        <br />
-        <input
-            className="inputs"
-            type="email"
-            name="email"
-            required
-            placeholder="Your Email"
-            value={formValue.email}
-            onChange={handelChange}
-        />
-        <br />
-        <textarea
-            className="inputs"
-            name="messages"
-            rows={5}
-            cols={45}
-            placeholder="Write a messages"
-            onChange={handelChange}
-            value={formValue.messages}
-        ></textarea>
-        {hasError ? <div className="invalid-form" id="invalid-form-messages">
-            message must be more then 10 character
-        </div> : null}
-        <Button
-            sx={{
-                backgroundColor: "var(--primary-color)",
-                width: "40%",
-                marginTop: "1em"
-                // borderRadius:2,
-            }}
-            size="medium"
-            variant="contained"
-            onClick={handelClick}
+                    <input
+                        className="inputs"
+                        type="text"
+                        name="name"
+                        required
+                        placeholder="Your Name"
+                        value={formValue.name}
+                        onChange={handelChange}
+                    />
+                    {hasError ? <div className="invalid-form" id="invalid-form-name">
+                        name must be more then 4 character
+                    </div> : null}
+                </div>
+                <div className="">
 
-        >
-            Send
-        </Button>
-    </form>
+                    <input
+                        className="inputs w-full"
+                        type="email"
+                        name="email"
+                        required
+                        placeholder="Your Email"
+                        value={formValue.email}
+                        onChange={handelChange}
+                    />
+                </div>
+            </div>
+            <div>
+
+                <textarea
+                    className="inputs"
+                    name="messages"
+                    rows={5}
+                    cols={45}
+                    placeholder="Write a messages"
+                    onChange={handelChange}
+                    value={formValue.messages}
+                ></textarea>
+                {hasError ? <div className="invalid-form" id="invalid-form-messages">
+                    message must be more then 10 character
+                </div> : null}
+            </div>
+            <Button
+                sx={{
+                    backgroundColor: "var(--primary-color)",
+                    width: "40%",
+                    marginTop: "1em"
+                    // borderRadius:2,
+                }}
+                size="medium"
+                variant="contained"
+                onClick={handelClick}
+
+            >
+                {props.submitBtnText ? props.submitBtnText : "Send"}
+            </Button>
+        </form>)
 }
