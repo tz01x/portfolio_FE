@@ -12,7 +12,10 @@ import ContractForm, { ContractFormConfig } from "./contract_form";
             <div class="grid sm:grid-cols-2 grid-cols-1 mt-5 space-x-5">
                 <div class="order-2 mt-6 sm:mt-0 sm:order-1">
                     <h4>Get In Touch</h4>
-                    <ContractForm  configuration={ContractFormConfig.ConfigTwo}  client:idle urlEndpoint="/get-in-touch/"/>
+                    <div class="max-w-sm">
+                        
+                        <ContractForm  configuration={ContractFormConfig.ConfigTwo}  client:idle urlEndpoint="/get-in-touch/"/>
+                    </div>
                 </div>
                 <div class="order-1 sm:order-2">
                     <div class="">My Contact Details</div>

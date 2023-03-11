@@ -3,17 +3,20 @@ import { useState } from "react";
 import { load } from 'recaptcha-v3'
 import configs from "../../configs.json";
 
-export enum ContractFormConfig{
+export enum ContractFormConfig {
     ConfigOne = "flex-row",
     ConfigTwo = "flex-col"
-} 
+}
 
 export interface IContractFormInterface {
     urlEndpoint: string
+    configuration: ContractFormConfig,
     submitBtnText?: string
     className?: string
-    configuration: ContractFormConfig
+    successAction?: Function,
 }
+
+type FormValidatorResult = [boolean, string];
 
 const formValueInit = {
     name: '',
@@ -21,37 +24,49 @@ const formValueInit = {
     messages: ''
 }
 
-
-const stringLengthValidation = (value: string, minLength: number = 1, maxLength: number = null) => {
-    if (value.length < minLength)
-        return false
-    if (maxLength && value.length > maxLength)
-        return false
-    return true
+const formErrorsInit = {
+    name: null,
+    email: null,
+    messages: null,
 }
 
-const emailValidation = (value: string) => {
+
+const stringLengthValidation = (value: string, minLength: number = 1, maxLength: number = null): FormValidatorResult => {
+    if (value.length < minLength)
+        return [false, "can't be less than " + minLength + " characters"];
+    if (maxLength && value.length > maxLength)
+        return [false, "can't be greater than " + maxLength + " characters"];
+    return [true, value];
+}
+
+const emailValidation = (value: string): FormValidatorResult => {
     const regx = new RegExp(".*@.*\.com$");
-    return regx.test(value);
+    if (!regx.test(value)) {
+        return [false, "is not a valid email address"];
+    }
+    return [true, value];
 }
 
 const formValidator = {
-    name: (v) => stringLengthValidation(v, 6, 50),
-    email: (v) => emailValidation(v),
-    messages: (v) => stringLengthValidation(v, 10, 100),
+    name: (v):FormValidatorResult => stringLengthValidation(v, 6, 50),
+    email: (v):FormValidatorResult => emailValidation(v),
+    messages: (v):FormValidatorResult => stringLengthValidation(v, 10, 500),
 }
 
 export default function ContractForm(props: IContractFormInterface) {
-    const [hasError, setHasError] = useState(false);
+    const [fromError, setFormError] = useState({ ...formErrorsInit });
     const [formValue, setFormValue] = useState({ ...formValueInit });
 
     const handelClick = async () => {
         let findError = false;
         Object.keys(formValue).forEach((key) => {
-
-            if (!formValidator[key](formValue[key])) {
+            
+            const [hasError, error] = formValidator[key](formValue[key]);
+            if (!hasError) {
                 findError = true;
-                setHasError(true);
+                setFormError(val => {
+                    return { ...val, [key]: error };
+                });
             }
         });
         if (findError) {
@@ -64,9 +79,18 @@ export default function ContractForm(props: IContractFormInterface) {
             const response = await fetch(configs.BASE_API + props.urlEndpoint, {
                 method: "POST",
                 body: JSON.stringify(payload),
+                headers: {
+                    "Content-Type": "application/json"
+                }
             });
             if (response.ok) {
+                const data = await response.json();
                 setFormValue({ ...formValueInit });
+                setFormError({ ...formErrorsInit });
+
+                if(props.successAction){
+                    props.successAction(data);
+                }
 
             } else {
                 console.log(await response.text());
@@ -84,11 +108,11 @@ export default function ContractForm(props: IContractFormInterface) {
     }
     return (
         <form className={"form mt-4 flex flex-col gap-3 " + (!props.className ? '' : props.className)} id="form" onSubmit={_ => false}>
-            <div className={"flex gap-3 "+props.configuration}>
-                <div className="">
+            <div className={"flex gap-3 w-full" + props.configuration}>
+                <div className="w-full">
 
                     <input
-                        className="inputs"
+                        className="inputs  w-full"
                         type="text"
                         name="name"
                         required
@@ -96,14 +120,14 @@ export default function ContractForm(props: IContractFormInterface) {
                         value={formValue.name}
                         onChange={handelChange}
                     />
-                    {hasError ? <div className="invalid-form" id="invalid-form-name">
-                        name must be more then 4 character
+                    {fromError.name ? <div className="invalid-form" id="invalid-form-name">
+                        {fromError.name}
                     </div> : null}
                 </div>
-                <div className="">
+                <div className="w-full">
 
                     <input
-                        className="inputs w-full"
+                        className="inputs   w-full"
                         type="email"
                         name="email"
                         required
@@ -111,12 +135,15 @@ export default function ContractForm(props: IContractFormInterface) {
                         value={formValue.email}
                         onChange={handelChange}
                     />
+                    {fromError.email ? <div className="invalid-form" id="invalid-form-email">
+                        {fromError.email}
+                    </div> : null}
                 </div>
             </div>
             <div>
 
                 <textarea
-                    className="inputs"
+                    className="inputs w-full"
                     name="messages"
                     rows={5}
                     cols={45}
@@ -124,8 +151,8 @@ export default function ContractForm(props: IContractFormInterface) {
                     onChange={handelChange}
                     value={formValue.messages}
                 ></textarea>
-                {hasError ? <div className="invalid-form" id="invalid-form-messages">
-                    message must be more then 10 character
+                {fromError.messages ? <div className="invalid-form" id="invalid-form-messages">
+                    {fromError.messages}
                 </div> : null}
             </div>
             <Button
