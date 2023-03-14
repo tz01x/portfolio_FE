@@ -4,9 +4,11 @@ import Tooltip from "@mui/material/Tooltip";
 
 export interface AboutInteractiveProps{
     className?:string
+    resume_link?:string
+    contract_link?:string
 }
 
-export default function ({className}:AboutInteractiveProps) {
+export default function ({className,resume_link, contract_link='./#contact'}:AboutInteractiveProps) {
 
     return <Box
         className={className}
@@ -24,7 +26,7 @@ export default function ({className}:AboutInteractiveProps) {
             size="medium"
             variant="contained"
             onClick={() => {
-                window.location.href = "./#contact";
+                window.location.href = contract_link;
             }}
         >
             Contact ME
@@ -34,6 +36,7 @@ export default function ({className}:AboutInteractiveProps) {
             <Button
 
                 variant="contained"
+                
                 sx={{
                     backgroundColor: "var(--primary-color)",
                     color: "white",
@@ -45,7 +48,7 @@ export default function ({className}:AboutInteractiveProps) {
                 }}
                 onClick={() => {
                     window.open(
-                        "https://tumzied.pythonanywhere.com/media/documents/CV-Abdur-Rahman-Tumzied.pdf",
+                        resume_link,
                         "_blank"
                     );
                 }}

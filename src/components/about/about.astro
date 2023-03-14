@@ -3,12 +3,15 @@ import styles from "./about.module.css";
 import AuthorPhoto from "../author_photo/author_photo.astro";
 import classNames from "classnames";
 import AboutInteractive from "./about_interactive";
+import { authorInfoStore } from "../../stores/author_info";
 
 export interface Props {
   class?: string;
   children?: React.ReactNode;
 }
 const className = Astro.props.class;
+const author = authorInfoStore.get();
+
 ---
 
 <div class={classNames(styles["container-default"], styles.root, className)}>
@@ -16,15 +19,14 @@ const className = Astro.props.class;
   <div class={styles["author-info"]}>
     <p class={styles["author-name"]}>
       <span>Hi,</span>
-      <br />i am <span>Tumzied</span>
+      <br />i am <span class="capitalize">{author.username}</span>
     </p>
     <p class={styles["author-job-title"]}>
-      Software Engineer at Enosis Solution
+      {author.about_sort}
     </p>
     <p>
-      I mostly do frontend and backend development; love to work with newer
-      technology and keen to learn more about AI-related development
+      {author.about}
     </p>
-    <AboutInteractive client:idle className="mt-4"/>
+    <AboutInteractive client:idle resume_link={author.cv_url} className="mt-4"/>
   </div>
 </div>

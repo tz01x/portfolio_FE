@@ -5,10 +5,14 @@ import Contract from '../components/contract/contract.astro';
 import { Portfolio } from '../components/portfolio/portfolio';
 import Skills from '../components/skills.astro';
 import Layout from '../layouts/Layout.astro';
+import { getAuthorInfo } from '../stores/author_info';
+
+
+const author  = await getAuthorInfo();
 
 ---
 
-<Layout title="Tumzied - Portfolio">
+<Layout title={author.username?.toUpperCase()  + " - Portfolio"}>
 	<main>
 		<About />
 		<Skills/>
