@@ -108,7 +108,7 @@ export default function ContractForm(props: IContractFormInterface) {
     }
     return (
         <form className={"form mt-4 flex flex-col gap-3 " + (!props.className ? '' : props.className)} id="form" onSubmit={_ => false}>
-            <div className={"flex gap-3 w-full" + props.configuration}>
+            <div className={"flex gap-3 w-full " + props.configuration}>
                 <div className="w-full">
 
                     <input

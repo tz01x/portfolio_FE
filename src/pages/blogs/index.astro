@@ -1,15 +1,31 @@
 ---
 import BlogLayout from "../../layouts/BlogLayout.astro";
 import conifgs from "../../configs.json";
-import { PaginationResponse, BlogsList } from "../../interfaces";
+import { PaginationResponse, BlogsList, Category } from "../../interfaces";
+import Categories from "./_categories.astro";
 
 let blogs: PaginationResponse<BlogsList> | undefined;
+let categories: Category[] | undefined;
+
+let query_parmas = ''
+
+if(Astro.url.search.length>0){
+    query_parmas = Astro.url.search + "&limit=50&offest=0"
+}else{
+    query_parmas = "?limit=50&offest=0"
+}
+
+
 
 try {
-    const response = await fetch(
-        conifgs.BASE_API + "/api/get-blogs?limit=50&offest=0"
-    );
-    blogs = (await response.json()) as PaginationResponse<BlogsList>;
+    blogs = await fetch(
+        conifgs.BASE_API + `/api/get-blogs${query_parmas}`
+    ).then((res=>res.json()));
+
+    categories = await fetch(
+        conifgs.BASE_API + '/api/categories'
+    ).then((res=>res.json()));
+   
 } catch (error) {}
 ---
 
@@ -68,9 +84,9 @@ try {
                                             return (
                                                 <li
                                                     tabindex="0"
-                                                    class="px-2  py-1 border border-white  transition-all rounded-lg hover:rounded-sm hover:scale-110 focus-visible:scale-110"
+                                                    class="px-2 capitalize cursor-pointer py-1 border border-white  transition-all rounded-lg hover:rounded-sm hover:scale-110 focus-visible:scale-110"
                                                 >
-                                                    {c}
+                                                    {c.name}
                                                 </li>
                                             );
                                         })}
@@ -84,5 +100,10 @@ try {
             }
         </ul>
     </div>
-    <div slot="aside"></div>
+    <div slot="aside">
+        <div class="p-6">
+            <Categories categories={categories}/>
+
+        </div>
+    </div>
 </BlogLayout>

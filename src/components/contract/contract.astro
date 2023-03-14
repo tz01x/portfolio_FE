@@ -1,5 +1,8 @@
 ---
 import ContractForm, { ContractFormConfig } from "./contract_form";
+import { authorInfoStore } from "../../stores/author_info";
+
+const authro = authorInfoStore.get();
 ---
 
 <section style="color:var(--secondary-color); overflow: hidden;">
@@ -13,8 +16,11 @@ import ContractForm, { ContractFormConfig } from "./contract_form";
                 <div class="order-2 mt-6 sm:mt-0 sm:order-1">
                     <h4>Get In Touch</h4>
                     <div class="max-w-sm">
-                        
-                        <ContractForm  configuration={ContractFormConfig.ConfigTwo}  client:idle urlEndpoint="/get-in-touch/"/>
+                        <ContractForm
+                            configuration={ContractFormConfig.ConfigTwo}
+                            client:idle
+                            urlEndpoint="/get-in-touch/"
+                        />
                     </div>
                 </div>
                 <div class="order-1 sm:order-2">
@@ -23,18 +29,28 @@ import ContractForm, { ContractFormConfig } from "./contract_form";
                     <div id="contact" class="mt-4">
                         <div class="contact-info">
                             <span>Email :</span>
-                            <br /> 
-                            <a href="mailto:abudr963rahman@gmail.com">abudr963rahman@gmail.com</a>
+                            <br />
+                            <a href={"mailto:" + authro.email}>{authro.email}</a
+                            >
                             <div class="mt-5">
                                 <span>Socials :</span>
-                            
+
                                 <div class="mt-2">
-                                    <a href="#" title="Facebook" class="inputs">facebook</a>
-                                    <a href="#" title="Twitter" class="inputs">twitter</a>
-                                    <a href="#" title="Linkedin" class="inputs">linkedin</a>
+                                    {
+                                        authro.socials.map((social) => {
+                                            return (
+                                                <a
+                                                    href={social.link}
+                                                    title={social.title}
+                                                    class="inputs mr-3"
+                                                >
+                                                    {social.name}
+                                                </a>
+                                            );
+                                        })
+                                    }
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
