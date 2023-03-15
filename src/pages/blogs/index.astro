@@ -38,7 +38,7 @@ try {
                         <li>
                             <article class="p-5">
                                 <header class="my-2">
-                                    <h2 class="text-lg underline" title={data.title}>
+                                    <h2 class="text-2xl underline capitalize" title={data.title}>
                                         <a href={`/blogs/${data.slug}`}>
                                             {data.title}
                                         </a>
@@ -77,14 +77,14 @@ try {
                                 <footer class="mt-2">
                                     <ul
                                         tabindex="0"
-                                        class="flex gap-2"
+                                        class="flex gap-3"
                                         aria-label="categories"
                                     >
                                         {data.category?.map((c) => {
                                             return (
                                                 <li
                                                     tabindex="0"
-                                                    class="px-2 capitalize cursor-pointer py-1 border border-white  transition-all rounded-lg hover:rounded-sm hover:scale-110 focus-visible:scale-110"
+                                                    class="px-3 capitalize cursor-pointer py-1 border border-gray-600  transition-all duration-500  rounded-2xl hover:rounded-sm hover:scale-110 focus-visible:scale-110"
                                                 >
                                                     {c.name}
                                                 </li>

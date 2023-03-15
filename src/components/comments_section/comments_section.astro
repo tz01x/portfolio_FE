@@ -11,10 +11,10 @@ const { blog_slug } = Astro.props;
 ---
 
 <div class="aside_component_comment" id="comment_section">
-    <div class="text-center">
+    <div class="text-left text-xl mb-3 font-medium">
         <h3>Comments</h3>
     </div>
-    <div class="mb-12">
+    <div class="mb-12 border-t border-gray-600">
         <PostComment client:load blog_slug={blog_slug} />
     </div>
 
