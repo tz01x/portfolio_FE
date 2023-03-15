@@ -1,0 +1,48 @@
+---
+import { Category } from "../../interfaces";
+
+interface Props {
+    categories: Category[];
+}
+
+const { categories } = Astro.props;
+
+const category_filtered = Astro.url.searchParams.get("category");
+
+const anctor_tag_class =
+    "inputs capitalize rounded-full transition-colors cursor-pointer hover:bg-gray-200  hover:text-black";
+---
+
+<section>
+    <h3 class="text-left mb-3 text-xl font-medium">Categories</h3>
+    <div class="flex gap-3 border-t border-gray-600 pt-3 flex-wrap">
+        {
+            Astro.url.pathname == "/blogs" ? (
+                <a href="/blogs" class={anctor_tag_class}>
+                    All
+                </a>
+            ) : null
+        }
+        {
+            categories.map((category) => {
+                const isActive = category.name === category_filtered;
+                return (
+                    <a
+                        data-active={isActive}
+                        href={"/blogs?category=" + category.name}
+                        class={anctor_tag_class}
+                    >
+                        {category.name}
+                    </a>
+                );
+            })
+        }
+    </div>
+</section>
+
+<style>
+    a[data-active] {
+        background-color: rgb(229 231 235);
+        color: black;
+    }
+</style>

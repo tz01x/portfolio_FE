@@ -1,7 +1,7 @@
 ---
+import CommentsList from "./comments_list";
+import { PostComment } from "./post_comment";
 import "./comments_section.css";
-import ContractForm from "../contract/contract_form";
-import { ContractFormConfig } from "../contract/contract_form";
 
 interface Props {
     blog_slug: string;
@@ -11,31 +11,13 @@ const { blog_slug } = Astro.props;
 ---
 
 <div class="aside_component_comment" id="comment_section">
-    <div class="text-center">
+    <div class="text-left text-xl mb-3 font-medium">
         <h3>Comments</h3>
     </div>
-    <div class="mb-12">
-        <!-- Todo: need to modify  ContractForm component to support extranal css -->
-        <ContractForm client:idle submitBtnText="Post" configuration={ContractFormConfig.ConfigOne} urlEndpoint={`/api/comments/${blog_slug}`} />
+    <div class="mb-12 border-t border-gray-600">
+        <PostComment client:load blog_slug={blog_slug} />
     </div>
 
-    <div class="comments">
-        <div class="comment" id="{i}">
-            <div class="flex gap-1">
-                <img
-                    class="rounded-full w-9 h-9"
-                    src="https://picsum.photos/seed/22/35/35"
-                    alt=""
-                />
-                <div>
-                    <div class="bg-[var(--primary-color)] rounded-md pr-10 p-2">
-                        <strong>alex</strong>
-                        <p>this is cool artical</p>
-                    </div>
-                    <div class="text-sm">4h ago</div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <CommentsList client:load />
 </div>
 <br />

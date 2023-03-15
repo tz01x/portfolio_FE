@@ -3,13 +3,13 @@ import BlogLayout from "../../layouts/BlogLayout.astro";
 import confgis from "../../configs.json";
 import { BlogDetail } from "../../interfaces";
 import CommentsSection from "../../components/comments_section/comments_section.astro";
+import Categories from "./_categories.astro";
 
 const { slug } = Astro.params;
 let data: BlogDetail | undefined = undefined;
 try {
     const respone = await fetch(confgis.BASE_API + "/api/blog/" + slug);
     if (!respone.ok) {
-        console.log(respone);
         return Astro.redirect("/404");
     }
     data = await respone.json();
@@ -64,21 +64,8 @@ try {
         </div>
     </div>
     <div slot="aside" class="p-6">
-        <section>
-            <h3 class="text-center">Categories</h3>
-            <div class="flex gap-3">
-                {
-                    data.category.map((name) => {
-                        return (
-                            <a class="inputs rounded-full transition-colors cursor-pointer hover:bg-gray-200  hover:text-black">
-                                {name}
-                            </a>
-                        );
-                    })
-                }
-            </div>
-        </section>
-        <section class="mt-5">
+        <Categories categories={data.category}/>
+        <section class="mt-28">
             <CommentsSection blog_slug={slug} />
         </section>
     </div>

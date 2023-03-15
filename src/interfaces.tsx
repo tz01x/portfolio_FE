@@ -15,6 +15,11 @@ export interface PaginationResponse<T>{
     results: T[]
 }
 
+export interface Category {
+    name: string;
+    id?: number | string;
+}
+
 export interface BlogsList {
     id: number
     title: string
@@ -24,7 +29,7 @@ export interface BlogsList {
     author: string
     created: string
     slug: string
-    category: Array<string>
+    category: Array<Category>
 }
 
 export interface BlogDetail extends BlogsList {
