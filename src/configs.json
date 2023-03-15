@@ -1,5 +1,5 @@
 {
-    "BASE_API":"http://localhost:8000",
-    "BASE_API_prod":"http://tumzied.pythonanywhere.com",
+    "BASE_API_dev":"http://localhost:8000",
+    "BASE_API":"http://tumzied.pythonanywhere.com",
     "Data_Site_Key":"6LeMCb8jAAAAAJOxdwpjpaGN0FfqWsEMzox1RGoX"
 }
