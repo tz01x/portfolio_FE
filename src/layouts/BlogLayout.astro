@@ -3,12 +3,14 @@ import Layout from "./Layout.astro";
 
 export interface Props {
 	title: string;
+	description?: string;
+	meta_image?: string;
 }
 
-const {title} = Astro.props;
+const {title, description, meta_image} = Astro.props;
 ---
 
-<Layout title={title}>
+<Layout title={title} description={description} meta_image={meta_image}>
     <section class="grid grid-cols-1 md:grid-cols-3">
         <main class="md:col-span-2 border border-b-0 border-l-0 min-h-screen">
             <slot></slot>
