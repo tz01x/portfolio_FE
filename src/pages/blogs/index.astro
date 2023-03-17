@@ -62,8 +62,8 @@ try {
                                                 class="cursor-pointer ml-2"
                                                 title={`views ${data.hits}`}
                                             >
-                                                <i class="fa-solid fa-eye" />{" "}
-                                                {data.hits}
+                                                <i class="fa-solid fa-eye" />
+                                                <span set:html={data.hits}></span>
                                             </span>
                                         </address>
                                     </div>
