@@ -12,7 +12,10 @@ const author  = await getAuthorInfo();
 
 ---
 
-<Layout title={author.username?.toUpperCase()  + " - Portfolio"}>
+<Layout 
+title={author.username?.toUpperCase()  + " - Portfolio"}
+description={`Hi, i am ${author.username}. `+author.about}
+>
 	<main>
 		<About />
 		<Skills/>

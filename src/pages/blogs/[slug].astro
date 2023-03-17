@@ -16,7 +16,11 @@ try {
 } catch (error) {}
 ---
 
-<BlogLayout title={`${data.title} - ${data.author}`}>
+<BlogLayout 
+title={`${data.title} - ${data.author}`}
+description={data.shortDescription}
+meta_image={data.picture}
+>
     <div class="w-3/4 mx-auto mt-5 relative">
         <header class="mb-6">
             <h1 class="text-3xl font-sans capitalize">{data.title}</h1>
