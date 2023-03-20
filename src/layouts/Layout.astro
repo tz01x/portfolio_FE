@@ -1,5 +1,6 @@
 ---
 import { Header } from "../components/headers/header";
+import {SnackbarComponent} from "../components/snackbar/snackbar";
 export interface Props {
 	title: string;
 	description?: string;
@@ -55,6 +56,8 @@ const url = Astro.url.href;
 		<Header />
 
 		<slot />
+
+		<SnackbarComponent client:load/>
 	</body>
 </html>
 <style is:global>
