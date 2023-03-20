@@ -17,6 +17,7 @@ export const PostComment = ({blog_slug}:IPostCommentPops)=>{
             submitBtnText="Post" 
             configuration={ContractFormConfig.ConfigOne} 
             urlEndpoint={`/api/comment-create/${blog_slug}`} 
+            processErrorResponse={(data)=>{return data.detail}}
         />
 
 }

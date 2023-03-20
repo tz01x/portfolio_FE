@@ -1,7 +1,10 @@
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+
 import { useState } from "react";
 import { load } from 'recaptcha-v3'
 import configs from "../../configs.json";
+import { snackbar_open, AlertEnum } from "../../stores/snackbar_service";
 
 export enum ContractFormConfig {
     ConfigOne = "flex-row",
@@ -14,6 +17,7 @@ export interface IContractFormInterface {
     submitBtnText?: string
     className?: string
     successAction?: Function,
+    processErrorResponse?: (data: any) => string,
 }
 
 type FormValidatorResult = [boolean, string];
@@ -48,19 +52,21 @@ const emailValidation = (value: string): FormValidatorResult => {
 }
 
 const formValidator = {
-    name: (v):FormValidatorResult => stringLengthValidation(v, 6, 50),
-    email: (v):FormValidatorResult => emailValidation(v),
-    messages: (v):FormValidatorResult => stringLengthValidation(v, 10, 500),
+    name: (v): FormValidatorResult => stringLengthValidation(v, 6, 50),
+    email: (v): FormValidatorResult => emailValidation(v),
+    messages: (v): FormValidatorResult => stringLengthValidation(v, 10, 500),
 }
 
 export default function ContractForm(props: IContractFormInterface) {
     const [fromError, setFormError] = useState({ ...formErrorsInit });
     const [formValue, setFormValue] = useState({ ...formValueInit });
+    const [isLoading, setLoading] = useState(false);
 
     const handelClick = async () => {
+        setLoading(true);
         let findError = false;
         Object.keys(formValue).forEach((key) => {
-            
+
             const [hasError, error] = formValidator[key](formValue[key]);
             if (!hasError) {
                 findError = true;
@@ -70,6 +76,7 @@ export default function ContractForm(props: IContractFormInterface) {
             }
         });
         if (findError) {
+            setLoading(false);
             return;
         }
         try {
@@ -88,18 +95,25 @@ export default function ContractForm(props: IContractFormInterface) {
                 setFormValue({ ...formValueInit });
                 setFormError({ ...formErrorsInit });
 
-                if(props.successAction){
+                if (props.successAction) {
                     props.successAction(data);
                 }
+                
+                snackbar_open('Submit Successfully', AlertEnum.Success);
 
             } else {
-                console.log(await response.text());
+                const data = await response.json();
+                const message = props.processErrorResponse(data);
+                snackbar_open( message, AlertEnum.Error);
             }
 
         } catch (error) {
+            
             console.log(error);
+            snackbar_open('Error: ' + JSON.stringify(error), AlertEnum.Error);
         }
 
+        setLoading(false);
     }
 
     const handelChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -162,12 +176,18 @@ export default function ContractForm(props: IContractFormInterface) {
                     marginTop: "1em"
                     // borderRadius:2,
                 }}
+                disabled={isLoading}
                 size="medium"
                 variant="contained"
                 onClick={handelClick}
 
             >
-                {props.submitBtnText ? props.submitBtnText : "Send"}
+                <div className="flex gap-3">
+
+                    {props.submitBtnText ? props.submitBtnText : "Send"}
+                    {isLoading && <CircularProgress size={20} />}
+
+                </div>
             </Button>
         </form>)
 }

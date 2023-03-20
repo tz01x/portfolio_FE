@@ -20,6 +20,9 @@ const authro = authorInfoStore.get();
                             configuration={ContractFormConfig.ConfigTwo}
                             client:idle
                             urlEndpoint="/get-in-touch/"
+                            processErrorResponse={(data)=>{
+                                return data.details;
+                            }}
                         />
                     </div>
                 </div>
