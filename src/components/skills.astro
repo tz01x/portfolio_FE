@@ -18,12 +18,12 @@ try {
 }
 ---
 
-<section class="my-10">
+<section class="my-10 sm:w-3/4 px-2 mx-auto">
     <header>
         <h2>Skills</h2>
     </header>
     <main class="mt-5">
-        <ul class="flex flex-wrap gap-8 justify-center max-w-lg m-auto">
+        <ul class="flex flex-wrap gap-6 justify-center max-w-lg m-auto">
             {
                 skills.map((skill) => {
                     return (
@@ -48,8 +48,6 @@ try {
 
 <style>
     section {
-        width: 70%;
-        margin: auto;
         color: var(--secondary-color);
     }
     header h2 {
