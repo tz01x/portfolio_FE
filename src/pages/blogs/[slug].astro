@@ -83,7 +83,9 @@ meta_image={data.picture}
     for (let index = 0; index < images.length; index++) {
         const element = images[index];
 
-        const relative_src = element.getAttribute("src");
-        element.src = confgis.BASE_API + relative_src;
+        const src = element.getAttribute("src");
+        if(!src.startsWith('https://')){
+            element.src = confgis.BASE_API + src;
+        }
     }
 </script>
