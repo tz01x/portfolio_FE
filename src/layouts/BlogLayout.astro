@@ -12,7 +12,7 @@ const {title, description, meta_image} = Astro.props;
 
 <Layout title={title} description={description} meta_image={meta_image}>
     <section class="grid grid-cols-1 md:grid-cols-3">
-        <main class="md:col-span-2 border border-b-0 border-l-0 min-h-screen">
+        <main class="md:col-span-2 md:border !border-b-0 !border-l-0 min-h-screen">
             <slot></slot>
         </main>
         <aside class="border border-b-0 border-x-0">

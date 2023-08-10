@@ -14,8 +14,8 @@ export const Header = ({ className, children = 'Header' }: HeaderProps) => {
     <div className={styles.header_root + ' ' + className}>
       <nav className={'mx-auto w-[90%] md:w-3/4 ' + styles['navbar']}>
         <a href='/' className={styles['brand-name']}>
-          <div className={styles['glitch-wrapper']}>
-            <div className={styles['glitch']}>Tz</div>
+          <div>
+            <div>Tz</div>
           </div>
         </a>
         <div className={styles['navbar-btn']}>

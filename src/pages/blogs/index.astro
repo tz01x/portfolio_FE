@@ -36,7 +36,7 @@ try {
                 blogs?.results?.map((data, index) => {
                     return (
                         <li>
-                            <article class="p-5">
+                            <article class="p-1">
                                 <header class="my-2">
                                     <h2 class="text-2xl underline capitalize" title={data.title}>
                                         <a href={`/blogs/${data.slug}`}>
@@ -70,7 +70,7 @@ try {
                                 </header>
 
                                 <main class="text-sm">
-                                    <p class="w-3/4" tabindex="0">
+                                    <p class="sm:w-4/5" tabindex="0">
                                         {data.shortDescription}
                                     </p>
                                 </main>
@@ -92,7 +92,8 @@ try {
                                         })}
                                     </ul>
                                 </footer>
-                                <hr class="mt-5" />
+                                {blogs.results.length-1 != index?<hr class="mt-5" />:<div></div>}
+                    
                             </article>
                         </li>
                     );
