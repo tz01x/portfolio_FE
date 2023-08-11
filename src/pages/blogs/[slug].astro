@@ -5,7 +5,7 @@ import { BlogDetail } from "../../interfaces";
 import CommentsSection from "../../components/comments_section/comments_section.astro";
 import Categories from "./_categories.astro";
 
-
+export const prerender = false;
 const { slug } = Astro.params;
 let data: BlogDetail | undefined = undefined;
 try {
