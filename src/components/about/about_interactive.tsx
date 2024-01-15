@@ -26,12 +26,15 @@ export default function ({className,resume_link, contract_link='./#contact'}:Abo
             size="medium"
             variant="contained"
             onClick={() => {
-                window.location.href = contract_link;
+                window.open(
+                    resume_link,
+                    "_blank"
+                );
             }}
         >
-            Contact ME
+            View Resume
         </Button>
-        <Tooltip title="Download Resume" >
+        <Tooltip title="Contact ME" >
 
             <Button
 
@@ -47,13 +50,10 @@ export default function ({className,resume_link, contract_link='./#contact'}:Abo
                     // borderRadius:1,
                 }}
                 onClick={() => {
-                    window.open(
-                        resume_link,
-                        "_blank"
-                    );
+                    window.location.href = contract_link
                 }}
             >
-                <i className="fa-solid fa-file-export"></i>
+                <i className="fa-solid fa-at"></i>
             </Button>
         </Tooltip>
     </Box>

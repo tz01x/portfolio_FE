@@ -33,7 +33,7 @@ meta_image={data?.picture}
 >
     <div class="sm:w-3/4 mx-auto my-5 px-2 relative">
         <header class="mb-6">
-            <h1 class="text-3xl font-sans capitalize">{data.title}</h1>
+            <h1 transition:name={data?.slug} class="text-3xl font-sans capitalize">{data.title}</h1>
 
             <div class="flex gap-2 mt-2 text-sm items-end">
                 <address class="flex flex-row gap-1">

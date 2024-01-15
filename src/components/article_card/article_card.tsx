@@ -1,10 +1,10 @@
 import { Box, Fade, Modal, Tooltip } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import classNames from 'classnames';
-import { Project } from '../../interfaces';
 import styles from './article_card.module.css'
 import Configs from "../../configs.json";
 import { useState } from 'react';
+import type { Project } from '../../interfaces';
 
 interface ArticleCardProps {
     data: Project
@@ -27,9 +27,9 @@ const style = {
 export function ArticleCard({ data }: ArticleCardProps) {
     const [modalOpen, setModalOpen] = useState(false)
     const handleClose = () => {
-        setModalOpen(false)
+        setModalOpen(v=>!v);
     }
-    return <article className={classNames(styles.portfolioArticle, "article_card")}>
+    return <article className={classNames(styles.portfolioArticle, "article_card")} onClick={() => setModalOpen(true)}>
         {/* <img src={gradient_tools_pic} alt="" /> */}
         {/* <img src={`${CONST['BASE_API']}${data.imgname}`} alt="" /> */}
         <h3>{data.title}</h3>
@@ -110,17 +110,17 @@ export function ArticleCard({ data }: ArticleCardProps) {
                                     &nbsp;
                                     &nbsp;
 
-                                    <a href={data.live_demo||"#"} target="_blank" rel="noopener noreferrer">
+                                    <a href={data.live_demo || "#"} target="_blank" rel="noopener noreferrer">
                                         <i className="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
                                     </a>
 
                                 </div>
                                 <div>
-                                    <IconButton 
-                                    onClick={handleClose}
-                                    sx={{
-                                        color:"var(--secondary-color)"
-                                    }}
+                                    <IconButton
+                                        onClick={()=>handleClose()}
+                                        sx={{
+                                            color: "var(--secondary-color)"
+                                        }}
                                     >
                                         <i className="fa-solid fa-xmark"></i>
                                     </IconButton>

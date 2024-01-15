@@ -1,6 +1,7 @@
 ---
 import { Header } from "../components/headers/header";
 import {SnackbarComponent} from "../components/snackbar/snackbar";
+import { ViewTransitions } from "astro:transitions";
 export interface Props {
 	title: string;
 	description?: string;
@@ -27,7 +28,7 @@ const url = Astro.url.href;
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
 			integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
 			crossorigin="anonymous"
-			referrerPolicy="no-referrer"
+			referrer-policy="no-referrer"
 		/>
 		<title>{title}</title>
 
@@ -51,6 +52,7 @@ const url = Astro.url.href;
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={meta_image} />
+		
 	</head>
 	<body>
 		<Header />

@@ -6,7 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
 import styles from './portfolio.module.css'
-import { Project } from '../../interfaces';
+import type { Project } from '../../interfaces';
 import { ArticleCard } from '../article_card/article_card';
 import useFetch from '../../utils/use_fetch';
 
